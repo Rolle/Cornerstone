@@ -8,6 +8,6 @@ Rails.application.routes.draw do
 
   resources :cornerstones
 
-  root :to => 'cornerstone#index'
+  root :to => 'cornerstones#index'
 
 end
