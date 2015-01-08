@@ -1,0 +1,82 @@
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h1><span class="glyphicon glyphicon-pencil"></span> Karte </h1>
+  </div>
+</div>
+
+<div class="container bs-docs-container">
+	<div class="row">
+		<div class="col-md-12" role="main">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3>Karte</b></h3>
+				</div>
+				<div class="panel-body">
+
+
+   					<div id ="map" style="width:auto; height: 700px;"></div>
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+<script src="http://maps.google.com/maps/api/js?v=3.2&sensor=false"></script>
+
+<script type='text/javascript'>   
+
+        <% if Rails.env.production? %>
+                L.Icon.Default.imagePath = '/';
+        <% else %>
+                L.Icon.Default.imagePath = '<%= asset_path "" %>';
+        <% end %>
+
+        map = new L.Map('map');
+
+        var osmde = L.tileLayer.provider('OpenStreetMap.DE');
+        var ggl = new L.Google();
+        var bing = new L.BingLayer("ApiJPrwDWWqUlXoy7gg460DQBa55V-i1XqWWQfnf1sz5HW4CfxUkBZ7afjaMtQ5W");
+        var esri = new L.tileLayer.provider('Esri.WorldTopoMap')
+
+        var markers_cornerstones = L.featureGroup();
+
+        var markers_to_id = new Array();
+        
+        map.addLayer(bing);
+
+        map.addLayer(markers_cornerstones);
+
+        var baseMaps = {
+                //"OSM": osm,
+                "Google": ggl,
+                "Bing": bing,
+                "OSM DE": osmde,
+                "Esri": esri
+        };
+
+        var redMarker = L.AwesomeMarkers.icon({
+                  icon: 'search', 
+                  markerColor: 'red',
+                  prefix: 'fa'
+        })
+
+        
+        var overlayMaps = {
+            "Grenzsteine": markers_cornerstones,
+        };
+        L.control.layers(baseMaps, overlayMaps).addTo(map);
+        
+
+        <% if @cornerstones %>
+                <% @cornerstones.each do |cornerstone| %>
+                        var marker = L.marker([<%= cornerstone.latitude %>, <%= cornerstone.longitude %>], {icon: redMarker});
+                        markers_cornerstones.addLayer(marker);                        
+                <% end %>
+        <% end %>
+
+        map.setView(new L.LatLng(49.77477900007886,6.80334), 12);
+</script> 

@@ -1,0 +1,49 @@
+<div class="bs-docs-header" id="content">
+  <div class="container">
+    <h1><span class="glyphicon glyphicon-pencil"></span> Upload</h1>
+  </div>
+</div>
+
+<div class="container bs-docs-container">
+	<div class="row">
+		<div class="col-md-9" role="main">
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3>Bilderupload</b></h3>
+				</div>
+				<div class="panel-body">
+					<%if flash.now[:notice] %>
+						<div class="alert alert-success alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	    	  				<%= flash.now[:notice] %>
+    	  				</div>
+    				<% end -%>
+
+					<%if flash.now[:error] %>
+						<div class="alert alert-danger alert-dismissible" role="alert">
+							<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	    	  				<%= flash.now[:error] %>
+    	  				</div>
+    				<% end -%>
+
+				    <h4>Neues Bild:</h4>
+
+					<%= form_for(@cornerstone) do |f| %>
+						<div class="form-group">
+					    	<label for="inputEmail3" class="col-sm-2 control-label">Datei:</label>
+							<div class="col-sm-7">
+					      		<%= f.file_field :image, :class=>"form-control" %>
+					    	</div>
+					  	</div>
+					  	<br/><br/>
+						<div class="form-group">
+					    	<div class="col-sm-offset-2 col-sm-10">
+					      		<%= f.submit "Upload", {class: "btn btn-primary", id: :commit} %>
+					    	</div>
+					  	</div>
+					<% end %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
