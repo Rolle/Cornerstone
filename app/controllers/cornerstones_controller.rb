@@ -13,6 +13,7 @@ class CornerstonesController < ApplicationController
   end
 
   def index
+    @cornerstones = Cornerstone.all
   end
 
   def map
